@@ -2,7 +2,7 @@
 
 import json
 import math
-from typing import Type
+from typing import Awaitable, Callable, Type
 
 from bleak import BleakClient, BleakGATTCharacteristic, BleakScanner
 
@@ -24,6 +24,14 @@ class DaydreamController(BleakClient):
         "touchpad": slice(16, 19),
     }
 
+    def __init__(self, *args, **kwargs) -> None:
+        """Initialise instance of Daydream controller."""
+        super().__init__(*args, **kwargs)
+        self._data: dict[str, float | BaseModel] = {}
+        self._callbacks: list[
+            Callable[[BleakGATTCharacteristic, bytearray], Awaitable[None]]
+        ] = []
+
     @classmethod
     async def from_name(
         cls: Type["DaydreamController"], name: str = DEVICE_NAME
@@ -42,13 +50,19 @@ class DaydreamController(BleakClient):
         """Start listening for GATT notifications for characteristic."""
         characteristic = self.services.get_characteristic(self.CHARACTERISTIC_UUID)
         await self.start_notify(characteristic, self.callback)
-        return None
+
+    async def register_callback(
+        self, callback: Callable[[BleakGATTCharacteristic, bytearray], Awaitable[None]]
+    ) -> None:
+        """Register callback to be executed on notification."""
+        self._callbacks.append(callback)
 
     async def callback(self, sender: BleakGATTCharacteristic, data: bytearray) -> None:
         """Define callback for characteristic notifications."""
         self._data = await self.parse_data(data)
         self.__dict__.update(self._data)
-        return None
+        for callback in self._callbacks:
+            await callback(sender, data)
 
     async def parse_data(self, data: bytearray) -> dict[str, float | BaseModel]:
         """Return dictionary of parsed data."""
