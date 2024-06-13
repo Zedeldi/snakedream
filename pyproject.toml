@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snakedream"
+description = "Python interface for a Daydream controller."
+version = "0.1.0"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Zack Didcott"}
+]
+maintainers = [
+  {name = "Zack Didcott"}
+]
+dependencies = [
+  "bleak"
+]
+requires-python = ">= 3.10"
+
+[project.urls]
+Homepage = "https://github.com/Zedeldi/snakedream"
+
+[project.scripts]
+snakedream-dump = "snakedream.__main__:main"
+
+[tool.isort]
+profile = "black"
