@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "snakedream"
 description = "Python interface for a Daydream controller."
-version = "0.2.0"
+version = "0.2.1"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
@@ -23,7 +23,7 @@ requires-python = ">= 3.10"
 Homepage = "https://github.com/Zedeldi/snakedream"
 
 [project.scripts]
-snakedream-dump = "snakedream.__main__:main"
+snakedream-mouse = "snakedream.__main__:main"
 
 [tool.isort]
 profile = "black"

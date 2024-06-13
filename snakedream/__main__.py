@@ -9,8 +9,12 @@ from snakedream.device import DaydreamController
 from snakedream.mouse import Mouse
 
 
-async def dump_json(interval: float = 1.0) -> NoReturn:
-    """Connect to device and dump controller state every interval."""
+async def control_mouse(debug: bool = False, interval: float = 1.0) -> NoReturn:
+    """
+    Connect to device and control mouse.
+
+    If debug is True, periodically output state of controller as JSON.
+    """
     try:
         controller = await DaydreamController.from_name()
         mouse = Mouse(controller)
@@ -23,12 +27,13 @@ async def dump_json(interval: float = 1.0) -> NoReturn:
         await controller.register_callback(mouse.callback)
         while True:
             await asyncio.sleep(interval)
-            pprint(await controller.to_json())
+            if debug:
+                pprint(await controller.to_json())
 
 
 def main() -> NoReturn:
     """Start asyncio loop for main entry point."""
-    asyncio.run(dump_json())
+    asyncio.run(control_mouse())
 
 
 if __name__ == "__main__":

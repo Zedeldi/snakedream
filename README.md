@@ -15,7 +15,7 @@ After cloning the repository with: `git clone https://github.com/Zedeldi/snakedr
 ### Build
 
 1. Install project: `pip install .`
-2. Run: `snakedream-dump`
+2. Run: `snakedream-mouse`
 
 ### Development
 
