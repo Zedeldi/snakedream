@@ -13,6 +13,7 @@ class DaydreamController(BleakClient):
     """Class to provide methods for Daydream controller."""
 
     DEVICE_NAME = "Daydream controller"
+    SERVICE_UUID = "0000fe55-0000-1000-8000-00805f9b34fb"
     CHARACTERISTIC_UUID = "00000001-1000-1000-8000-00805f9b34fb"
     DATA_MAPPING: dict[str, int | slice] = {
         "time": slice(0, 2),
@@ -48,7 +49,8 @@ class DaydreamController(BleakClient):
 
     async def start(self) -> None:
         """Start listening for GATT notifications for characteristic."""
-        characteristic = self.services.get_characteristic(self.CHARACTERISTIC_UUID)
+        service = self.services.get_service(self.SERVICE_UUID)
+        characteristic = service.get_characteristic(self.CHARACTERISTIC_UUID)
         await self.start_notify(characteristic, self.callback)
 
     async def register_callback(

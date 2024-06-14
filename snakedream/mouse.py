@@ -5,10 +5,11 @@ from collections.abc import Iterable
 import uinput
 from bleak import BleakGATTCharacteristic
 
+from snakedream.base import Callback
 from snakedream.device import DaydreamController
 
 
-class Mouse(uinput.Device):
+class Mouse(Callback, uinput.Device):
     """Subclass of uinput device to handle mouse methods."""
 
     def __init__(
@@ -25,8 +26,7 @@ class Mouse(uinput.Device):
         **kwargs,
     ) -> None:
         """Initialise instance of mouse device."""
-        super().__init__(events, name, *args, **kwargs)
-        self.controller = controller
+        super().__init__(controller, events, name, *args, **kwargs)
 
     async def move(self, x: int, y: int) -> None:
         """Move mouse to specified location."""

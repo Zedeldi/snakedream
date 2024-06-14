@@ -6,6 +6,7 @@ from pprint import pprint
 from typing import NoReturn
 
 from snakedream.device import DaydreamController
+from snakedream.graph import InputGraph
 from snakedream.mouse import Mouse
 
 
@@ -13,18 +14,22 @@ async def control_mouse(debug: bool = False, interval: float = 1.0) -> NoReturn:
     """
     Connect to device and control mouse.
 
-    If debug is True, periodically output state of controller as JSON.
+    If debug is True, periodically output state of controller as JSON
+    and display graphs.
     """
     try:
         controller = await DaydreamController.from_name()
         mouse = Mouse(controller)
+        graph = InputGraph(controller)
     except RuntimeError:
         print("Device not found. Please check it is powered on.")
         print("Try pressing the Home button or charging the device.")
         sys.exit(1)
     async with controller:
         await controller.start()
-        await controller.register_callback(mouse.callback)
+        await mouse.start()
+        if debug:
+            await graph.start()
         while True:
             await asyncio.sleep(interval)
             if debug:
