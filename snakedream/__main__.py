@@ -1,6 +1,7 @@
 """Provide main entry point for snakedream."""
 
 import asyncio
+import json
 import sys
 from pprint import pprint
 from typing import NoReturn
@@ -33,7 +34,7 @@ async def control_mouse(debug: bool = False, interval: float = 1.0) -> NoReturn:
         while True:
             await asyncio.sleep(interval)
             if debug:
-                pprint(await controller.to_json())
+                pprint(json.loads(await controller.to_json()))
 
 
 def main() -> NoReturn:
