@@ -25,6 +25,8 @@ After cloning the repository with: `git clone https://github.com/Zedeldi/snakedr
 #### Libraries:
 
 - [Bleak](https://pypi.org/project/bleak/) - BLE Client
+- [Matplotlib](https://pypi.org/project/matplotlib/) - Graph support
+- [python-uinput](https://pypi.org/project/python-uinput/) - Mouse support
 
 ## Credits
 
