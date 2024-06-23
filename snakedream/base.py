@@ -7,7 +7,7 @@ from bleak import BleakGATTCharacteristic
 from snakedream.device import DaydreamController
 
 
-class Callback(ABC):
+class BaseCallback(ABC):
     """Base class to support registering a callback for a Daydream controller."""
 
     def __init__(self, controller: DaydreamController, *args, **kwargs) -> None:

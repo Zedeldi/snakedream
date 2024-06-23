@@ -8,11 +8,11 @@ import mpl_toolkits.mplot3d.art3d as art3d
 from bleak import BleakGATTCharacteristic
 from mpl_toolkits.mplot3d import Axes3D
 
-from snakedream.base import Callback
+from snakedream.base import BaseCallback
 from snakedream.device import DaydreamController
 
 
-class InputGraph(Callback):
+class InputGraph(BaseCallback):
     """Handle graph methods and attributes."""
 
     PAUSE_INTERVAL = 0.0001

@@ -8,7 +8,7 @@ from typing import NoReturn
 
 from snakedream.device import DaydreamController
 from snakedream.graph import InputGraph
-from snakedream.mouse import Mouse
+from snakedream.mouse import GyroscopeMouse
 
 
 async def control_mouse(debug: bool = False, interval: float = 1.0) -> NoReturn:
@@ -20,7 +20,7 @@ async def control_mouse(debug: bool = False, interval: float = 1.0) -> NoReturn:
     """
     try:
         controller = await DaydreamController.from_name()
-        mouse = Mouse(controller)
+        mouse = GyroscopeMouse(controller)
         graph = InputGraph(controller)
     except RuntimeError:
         print("Device not found. Please check it is powered on.")

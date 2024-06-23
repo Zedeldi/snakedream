@@ -5,11 +5,11 @@ from collections.abc import Iterable
 import uinput
 from bleak import BleakGATTCharacteristic
 
-from snakedream.base import Callback
+from snakedream.base import BaseCallback
 from snakedream.device import DaydreamController
 
 
-class BaseMouse(Callback, uinput.Device):
+class BaseMouse(BaseCallback, uinput.Device):
     """Subclass of uinput device to handle mouse methods."""
 
     def __init__(
