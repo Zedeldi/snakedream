@@ -1,11 +1,11 @@
 """Collection of dataclasses to model components of a Daydream controller."""
 
 from abc import ABC
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from ctypes import c_int32 as int32
 from dataclasses import asdict, dataclass, is_dataclass
 from json import JSONEncoder
-from typing import Any, Callable, Optional
+from typing import Any, Optional
 
 
 class ModelJSONEncoder(JSONEncoder):

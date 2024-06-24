@@ -19,7 +19,7 @@ dependencies = [
   "matplotlib",
   "python-uinput"
 ]
-requires-python = ">= 3.10"
+requires-python = ">= 3.12"
 
 [project.urls]
 Homepage = "https://github.com/Zedeldi/snakedream"

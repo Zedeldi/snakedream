@@ -1,7 +1,7 @@
 """Provide methods and attributes to handle a Daydream controller."""
 
 import json
-from typing import Awaitable, Callable, Type
+from collections.abc import Awaitable, Callable
 
 from bleak import BleakClient, BleakGATTCharacteristic, BleakScanner
 
@@ -47,7 +47,7 @@ class DaydreamController(BleakClient):
 
     @classmethod
     async def from_name(
-        cls: Type["DaydreamController"], name: str = DEVICE_NAME
+        cls: type["DaydreamController"], name: str = DEVICE_NAME
     ) -> "DaydreamController":
         """Return controller instance from device name."""
         device = await BleakScanner.find_device_by_name(name)
