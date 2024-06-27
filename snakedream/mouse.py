@@ -1,8 +1,8 @@
 """Handle mouse movements and actions."""
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 import uinput
 from bleak import BleakGATTCharacteristic
@@ -20,7 +20,7 @@ class ButtonMapping:
 
     button: str
     action: str
-    args: Iterable[Any]
+    args: Sequence[Any]
 
 
 class BaseMouse(BaseCallback, uinput.Device):
@@ -53,6 +53,7 @@ class BaseMouse(BaseCallback, uinput.Device):
         super().__init__(controller, events, name, *args, **kwargs)
         self.sensitivity = sensitivity
         self.buttons = buttons
+        self._state: dict[str, bool] = {}
 
     async def move(self, x: int, y: int) -> None:
         """Move mouse to specified location."""
@@ -63,15 +64,26 @@ class BaseMouse(BaseCallback, uinput.Device):
         """Scroll view by specified value."""
         self.emit(uinput.REL_WHEEL, value)
 
-    async def click(self, button: InputEvent = uinput.BTN_LEFT) -> None:
+    async def click(
+        self, button: InputEvent = uinput.BTN_LEFT, value: Optional[int] = None
+    ) -> None:
         """Click specified mouse button."""
+        if value is not None:
+            self.emit(button, value)
+            return
         self.emit(button, 1)
         self.emit(button, 0)
 
     async def handle_buttons(self, buttons: Buttons) -> None:
         """Handle button input according to current button mapping."""
         for mapping in self.buttons:
-            if getattr(buttons, mapping.button):
+            if mapping.action == "click":
+                state = getattr(buttons, mapping.button)
+                # To avoid repeatedly clicking and allow dragging
+                if state != self._state.get(mapping.button):
+                    await self.click(mapping.args[0], value=int(state))
+                self._state[mapping.button] = state
+            elif getattr(buttons, mapping.button):
                 await getattr(self, mapping.action)(*mapping.args)
 
     def _calculate_movement(self, x: float, y: float) -> tuple[int, int]:
