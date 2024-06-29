@@ -3,43 +3,89 @@
 import asyncio
 import json
 import sys
+from argparse import ArgumentParser
 from pprint import pprint
 from typing import NoReturn
 
 from snakedream.device import DaydreamController
 from snakedream.graph import InputGraph
-from snakedream.mouse import GyroscopeMouse
+from snakedream.mouse import GyroscopeMouse, TouchpadMouse
 
 
-async def control_mouse(debug: bool = False, interval: float = 1.0) -> NoReturn:
-    """
-    Connect to device and control mouse.
+def get_parser() -> ArgumentParser:
+    """Return ArgumentParser instance for command-line argument parsing."""
+    parser = ArgumentParser(
+        prog="snakedream",
+        description="Python interface for a Daydream controller",
+        epilog="Copyright (C) 2024 Zack Didcott",
+    )
 
-    If debug is True, periodically output state of controller as JSON
-    and display graphs.
-    """
+    parser.add_argument(
+        "--graph",
+        "-g",
+        action="store_true",
+        help="display graphs for device information",
+    )
+    parser.add_argument(
+        "--interval",
+        "-i",
+        type=int,
+        default=1,
+        help="interval between printing device state",
+    )
+    parser.add_argument(
+        "--json", "-j", action="store_true", help="output device information in JSON"
+    )
+    parser.add_argument(
+        "--mouse",
+        "-m",
+        type=str,
+        default="gyroscope",
+        choices=["gyroscope", "touchpad", "disable"],
+        help="enable mouse control",
+    )
+    parser.add_argument(
+        "--name",
+        "-n",
+        type=str,
+        default=DaydreamController.DEVICE_NAME,
+        help="Bluetooth device name for Daydream controller",
+    )
+
+    return parser
+
+
+async def _main() -> NoReturn:
+    """Connect to device and start specified callbacks."""
+    parser = get_parser()
+    args = parser.parse_args()
     try:
-        controller = await DaydreamController.from_name()
-        mouse = GyroscopeMouse(controller)
-        graph = InputGraph(controller)
+        print(f"Attempting to connect to '{args.name}'...")
+        controller = await DaydreamController.from_name(args.name)
     except RuntimeError:
-        print("Device not found. Please check it is powered on.")
+        print(f"Could not connect to '{args.name}'. Please check it is powered on.")
         print("Try pressing the Home button or charging the device.")
         sys.exit(1)
     async with controller:
         await controller.start()
-        await mouse.start()
-        if debug:
+        if args.mouse != "disable":
+            if args.mouse == "gyroscope":
+                mouse = GyroscopeMouse(controller)
+            elif args.mouse == "touchpad":
+                mouse = TouchpadMouse(controller)
+            await mouse.start()
+        if args.graph:
+            graph = InputGraph(controller)
             await graph.start()
         while True:
-            await asyncio.sleep(interval)
-            if debug:
+            await asyncio.sleep(args.interval)
+            if args.json:
                 pprint(json.loads(await controller.to_json()))
 
 
 def main() -> NoReturn:
     """Start asyncio loop for main entry point."""
-    asyncio.run(control_mouse())
+    asyncio.run(_main())
 
 
 if __name__ == "__main__":
