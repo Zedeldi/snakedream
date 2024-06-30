@@ -16,6 +16,10 @@ Data models to represent returned data and handle byte definition calculations a
 Please note, `ctypes.c_int32` is used when performing bitwise shifts to intentionally allow overflows.
 
 `snakedream.mouse` and `snakedream.graph` contain callbacks for mouse and graph support, respectively.
+Mouse control is currently supported via two backends: `uinput`, creating a virtual mouse device, and `PyAutoGUI`, which controls the cursor directly.
+`uinput` is supported on Linux, both Xorg and Wayland.
+`PyAutoGUI` supports all known platforms, except Wayland on Linux.
+To manually specify which backend is used, set `snakedream.config.MOUSE_BACKEND` to the desired value.
 
 ### Callbacks
 
@@ -53,7 +57,7 @@ After cloning the repository with: `git clone https://github.com/Zedeldi/snakedr
 1. Install dependencies: `pip install -r requirements.txt`
 2. Run: `python -m snakedream`
 
-By default, with no arguments, `snakedream` will create a device using `uinput` to control the mouse with the gyroscope.
+By default, with no arguments, `snakedream` will control the mouse with the gyroscope, using the appropriate backend for the host platform.
 Additionally, `snakedream` can output the controller state as JSON or to a graph with `matplotlib`.
 
 For more information, see `snakedream --help`.
@@ -62,7 +66,8 @@ For more information, see `snakedream --help`.
 
 - [Bleak](https://pypi.org/project/bleak/) - BLE Client
 - [Matplotlib](https://pypi.org/project/matplotlib/) - Graph support
-- [python-uinput](https://pypi.org/project/python-uinput/) - Mouse support
+- [python-uinput](https://pypi.org/project/python-uinput/) - Mouse support (device backend)
+- [PyAutoGUI](https://pypi.org/project/PyAutoGUI/) - Mouse support (GUI backend)
 
 ## Credits
 
