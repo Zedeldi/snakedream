@@ -51,6 +51,13 @@ def get_parser() -> ArgumentParser:
         default=DaydreamController.DEVICE_NAME,
         help="Bluetooth device name for Daydream controller",
     )
+    parser.add_argument(
+        "--sensitivity",
+        "-s",
+        type=int,
+        default=8,
+        help="mouse sensitivity",
+    )
 
     return parser
 
@@ -70,9 +77,9 @@ async def _main() -> NoReturn:
         await controller.start()
         if args.mouse != "disable":
             if args.mouse == "gyroscope":
-                mouse = GyroscopeMouse(controller)
+                mouse = GyroscopeMouse(controller, sensitivity=args.sensitivity)
             elif args.mouse == "touchpad":
-                mouse = TouchpadMouse(controller)
+                mouse = TouchpadMouse(controller, sensitivity=args.sensitivity)
             await mouse.start()
         if args.graph:
             graph = InputGraph(controller)
