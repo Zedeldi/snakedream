@@ -58,6 +58,13 @@ def get_parser() -> ArgumentParser:
         default=8,
         help="mouse sensitivity",
     )
+    parser.add_argument(
+        "--timeout",
+        "-t",
+        type=float,
+        default=10,
+        help="timeout for Bluetooth device (negative values wait forever)",
+    )
 
     return parser
 
@@ -66,9 +73,10 @@ async def _main() -> NoReturn:
     """Connect to device and start specified callbacks."""
     parser = get_parser()
     args = parser.parse_args()
+    timeout = float("inf") if args.timeout < 0 else args.timeout
     try:
         print(f"Attempting to connect to '{args.name}'...")
-        controller = await DaydreamController.from_name(args.name)
+        controller = await DaydreamController.from_name(args.name, timeout)
     except RuntimeError:
         print(f"Could not connect to '{args.name}'. Please check it is powered on.")
         print("Try pressing the Home button or charging the device.")

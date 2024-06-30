@@ -47,10 +47,10 @@ class DaydreamController(BleakClient):
 
     @classmethod
     async def from_name(
-        cls: type["DaydreamController"], name: str = DEVICE_NAME
+        cls: type["DaydreamController"], name: str = DEVICE_NAME, timeout: float = 10
     ) -> "DaydreamController":
         """Return controller instance from device name."""
-        device = await BleakScanner.find_device_by_name(name)
+        device = await BleakScanner.find_device_by_name(name, timeout)
         if not device:
             raise RuntimeError(f"Cannot find device with name {name}")
         return cls(device)
