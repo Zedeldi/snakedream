@@ -45,24 +45,34 @@ await callback.start()
 
 ## Installation
 
-After cloning the repository with: `git clone https://github.com/Zedeldi/snakedream.git`
+### PyPI
 
-### Build
+1. Install project: `pip install snakedream`
+2. Run: `snakedream`
+
+### Source
+
+Alternatively, after cloning the repository with:
+`git clone https://github.com/Zedeldi/snakedream.git`
+
+#### Build
 
 1. Install project: `pip install .`
 2. Run: `snakedream`
 
-### Development
+#### Development
 
 1. Install dependencies: `pip install -r requirements.txt`
 2. Run: `python -m snakedream`
+
+## Usage
 
 By default, with no arguments, `snakedream` will control the mouse with the gyroscope, using the appropriate backend for the host platform.
 Additionally, `snakedream` can output the controller state as JSON or to a graph with `matplotlib`.
 
 For more information, see `snakedream --help`.
 
-#### Libraries:
+## Libraries
 
 - [Bleak](https://pypi.org/project/bleak/) - BLE Client
 - [Matplotlib](https://pypi.org/project/matplotlib/) - Graph support
