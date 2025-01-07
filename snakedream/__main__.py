@@ -17,7 +17,7 @@ def get_parser() -> ArgumentParser:
     parser = ArgumentParser(
         prog="snakedream",
         description="Python interface for a Daydream controller",
-        epilog="Copyright (C) 2024 Zack Didcott",
+        epilog="Copyright (C) 2025 Zack Didcott",
     )
 
     parser.add_argument(
