@@ -21,9 +21,17 @@ dependencies = [
   "PyAutoGUI"
 ]
 requires-python = ">= 3.12"
+keywords = ["daydream", "controller", "bluetooth", "uinput", "bleak"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
 
 [project.urls]
 Homepage = "https://github.com/Zedeldi/snakedream"
+Repository = "https://github.com/Zedeldi/snakedream.git"
+Issues = "https://github.com/Zedeldi/snakedream/issues"
 
 [project.scripts]
 snakedream = "snakedream.__main__:main"
