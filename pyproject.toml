@@ -7,7 +7,7 @@ name = "snakedream"
 description = "Python interface for a Daydream controller."
 version = "1.2.1"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "MIT"
 authors = [
   {name = "Zack Didcott"}
 ]
@@ -24,7 +24,6 @@ requires-python = ">= 3.12"
 keywords = ["daydream", "controller", "bluetooth", "uinput", "bleak"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent"
 ]
 
