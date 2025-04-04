@@ -1,6 +1,6 @@
 # snakedream
 
-[![GitHub license](https://img.shields.io/github/license/Zedeldi/snakedream?style=flat-square)](https://github.com/Zedeldi/snakedream/blob/master/LICENSE) [![GitHub last commit](https://img.shields.io/github/last-commit/Zedeldi/snakedream?style=flat-square)](https://github.com/Zedeldi/snakedream/commits) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![GitHub license](https://img.shields.io/github/license/Zedeldi/snakedream?style=flat-square)](https://github.com/Zedeldi/snakedream/blob/master/LICENSE) [![GitHub last commit](https://img.shields.io/github/last-commit/Zedeldi/snakedream?style=flat-square)](https://github.com/Zedeldi/snakedream/commits) [![PyPI version](https://img.shields.io/pypi/v/snakedream?style=flat-square)](https://pypi.org/project/snakedream/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
 Python interface for a Daydream controller.
 
@@ -81,8 +81,8 @@ For more information, see `snakedream --help`.
 
 ## Credits
 
- - [daydream-controller.js](https://github.com/mrdoob/daydream-controller.js) - WebBluetooth Daydream Controller
- - [Forrest Porter](https://stackoverflow.com/a/40753551) - Stack Overflow answer for byte definitions
+- [daydream-controller.js](https://github.com/mrdoob/daydream-controller.js) - WebBluetooth Daydream Controller
+- [Forrest Porter](https://stackoverflow.com/a/40753551) - Stack Overflow answer for byte definitions
 
 ## License
 
